@@ -1,0 +1,21 @@
+.menu-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .delete-icon {
+    display: none;
+  }
+  
+  .menu-item:hover .delete-icon {
+    display: inline;
+    position: absolute;
+    right: 20px;
+    top: 11px;
+    font-size: 16px;
+  }
+  
+  .ant-menu-item-selected {
+    background-color: #1890ff !important;
+  }
