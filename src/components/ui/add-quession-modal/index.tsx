@@ -2,10 +2,13 @@ import { useState } from 'react';
 import { Button, Modal, Form } from 'antd';
 import { ProFormText } from '@ant-design/pro-components';
 import './styls.scss'
+import http from '../../../config';
+import { MenuIds } from '@store';
 
 function Index() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [form] = Form.useForm();
+  const {menu_id}:any = MenuIds()
 
   const showModal = () => {
     form.resetFields();
@@ -18,7 +21,11 @@ function Index() {
   };
 
   async function handleSubmit(values: any){
+    values.poll_id = menu_id
     console.log(values);
+
+    const response = await http.post('/question', values)
+    console.log(response);
     handleCancel();
   }
 
@@ -37,7 +44,7 @@ function Index() {
       >
         <Form onFinish={(values) => handleSubmit(values)} form={form} layout="vertical">
           <ProFormText
-            name="question_name"
+            name="content"
             label="So'rovnoma nomi"
             placeholder="Iltimos so'rovnoma nomini kiriting"
             rules={[{ required: true, message: "So'rovnoma nomini kiriting !" }]}

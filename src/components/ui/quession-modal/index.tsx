@@ -3,6 +3,7 @@ import { Button, Modal, Form, Input, Space } from 'antd';
 import { ProFormText } from '@ant-design/pro-components';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import './style.scss'
+import http from '../../../config';
 
 function Index(props: any) {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -22,8 +23,17 @@ function Index(props: any) {
   };
 
   const onFinish = async (values: any) => {
-    console.log(values);
-    props?.datas([...props?.data, values?.quession_name]);
+    const formattedValues = {
+      ...values,
+      options: values.options.map((option: any) => ({
+        ...option,
+        ball: Number(option.ball),
+      })),
+    };
+  
+    console.log(formattedValues);
+    const response = await http.post('/poll', formattedValues, {});
+    console.log(response);
     setIsModalOpen(false);
     form.resetFields();
   };
@@ -42,13 +52,13 @@ function Index(props: any) {
           form={form}
           onFinish={onFinish}
           initialValues={{
-            options: [{ option: '', option_ball: '' }]  // Default initial value
+            options: [{ variant: '', ball: '' }]
           }}
         >
           <ProFormText
             initialValue={''}
             hasFeedback
-            name="quession_name"
+            name="title"
             placeholder="Iltimos so'rovnoma to'plami nomini kiriting"
             rules={[
               {
@@ -69,7 +79,7 @@ function Index(props: any) {
                    <div style={{display: 'flex-box', alignItems: 'center', width: '100%', position: 'relative'}}>
                     <Form.Item
                         {...restField}
-                        name={[name, 'option']}
+                        name={[name, 'variant']}
                         rules={[{ required: true, message: 'Variant kiriting!' }]}
                         style={{ flex: 1, width: '70%', paddingLeft: 20 }}  
                       >
@@ -77,7 +87,7 @@ function Index(props: any) {
                       </Form.Item>
                       <Form.Item
                         {...restField}
-                        name={[name, 'option_ball']}
+                        name={[name, 'ball']}
                         rules={[{ required: true, message: 'Ball kiriting!' }]}
                         style={{ flex: 1, width: '28%', position: 'absolute', right: 0, top: 0 }}  
                       >
