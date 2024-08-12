@@ -19,3 +19,25 @@
   .ant-menu-item-selected {
     background-color: #1890ff !important;
   }
+
+
+  .logo{
+    width: 70px;
+    height: 70px;
+  }
+
+.logo-wrapper{
+  display: flex;
+  align-items: center;
+  gap: 0px;
+}
+
+.logo-wrapper > p{
+  font-size: 20px;
+  font-weight: 600;
+  font-family: sans-serif;
+}
+
+.logo-hidden{
+  display: none !important;
+}

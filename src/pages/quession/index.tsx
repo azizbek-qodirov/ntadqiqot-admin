@@ -10,6 +10,7 @@ import { toast, ToastContainer } from "react-toastify";
 function Quessionpage() {
     const {menu_id}:any = MenuIds()
     const [datas, setDatas] = useState([])
+    const [options, setOptions] = useState([])
     
 
     async function getQuession(){
@@ -17,8 +18,8 @@ function Quessionpage() {
         try {
           const response = await http.get(`/questions/${menu_id}`)
           setDatas(response?.data?.question || [])
+          setOptions(response?.data?.poll?.options || [])
 
-          console.log(response);
         } catch (error) {
           console.error(error)
         }
@@ -64,8 +65,8 @@ function Quessionpage() {
       title: 'Amallar',
       key: 'action',
       render: (_, record:any) => (
-        <Space size="middle">
-          <Button type="link">O'zgartirish</Button>
+        <Space size="middle" style={{display: 'flex', alignItems: 'center'}}>
+          <AddQuession data={record} title={"O'zgartirish"}  getData={getQuession}/>
           <Button onClick={() => handleDelete(record?.id)} type="link" danger>
             O'chirish
           </Button>
@@ -80,9 +81,9 @@ function Quessionpage() {
     <>
     <ToastContainer/>
       <div style={{display: 'flex', justifyContent: 'end'}}>
-        <AddQuession/>
+        <AddQuession getData={getQuession}/>
       </div>
-      <QuessionTable data={datas} columns={columns}/>
+      <QuessionTable options={options} data={datas} columns={columns}/>
     </>
   )
 }

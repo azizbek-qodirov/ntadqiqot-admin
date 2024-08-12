@@ -4,8 +4,9 @@ import { ProFormText } from '@ant-design/pro-components';
 import './styls.scss'
 import http from '../../../config';
 import { MenuIds } from '@store';
+import { toast } from 'react-toastify';
 
-function Index() {
+function Index(props:any) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [form] = Form.useForm();
   const {menu_id}:any = MenuIds()
@@ -21,20 +22,39 @@ function Index() {
   };
 
   async function handleSubmit(values: any){
-    values.poll_id = menu_id
-    console.log(values);
-
-    const response = await http.post('/question', values)
-    console.log(response);
+    if(props?.title){
+      try{
+        values.id = props?.data?.id
+        const response = await http.put(`/question/`, values)
+        if(response.status == 200){
+          toast.success("Savol muvaffqiyatli tahrirlandi", {autoClose: 1200})
+        }
+      }catch(err){
+          toast.error("Savol tahrirlashda qandaydir muommo yuzaga keldi", {autoClose: 1200})
+      }
+    }else{
+      try{
+        values.poll_id = menu_id
+        const response = await http.post('/question/', values)
+        if(response.status == 200){
+          toast.success("Savol muvaffqiyatli qo'shildi", {autoClose: 1200})
+        }
+      }catch(err){
+          toast.error("Savol qo'shishda qandaydir muommo yuzaga keldi", {autoClose: 1200})
+      }
+    }
+    props?.getData()
     handleCancel();
   }
 
-
+  const style = {
+    marginBottom: props?.title ? 0 : 20,
+  }
 
   return (
     <>
-      <Button type='primary' style={{marginBottom: 20, width: '100%', maxWidth: '200px'}} onClick={showModal}>
-        So'rovnoma qo'shish
+      <Button type={props?.title ? 'dashed' : 'primary'} style={{ width: '100%', maxWidth: '200px', ...style }} onClick={showModal}>
+        {props?.title || "So'rovnoma qo'shish"} 
       </Button>
       <Modal
         title={"So'rovnoma qo'shish"}
@@ -44,6 +64,7 @@ function Index() {
       >
         <Form onFinish={(values) => handleSubmit(values)} form={form} layout="vertical">
           <ProFormText
+            initialValue={props?.data?.content || ''}
             name="content"
             label="So'rovnoma nomi"
             placeholder="Iltimos so'rovnoma nomini kiriting"
