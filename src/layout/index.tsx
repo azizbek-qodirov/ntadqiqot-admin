@@ -46,6 +46,7 @@ const App: React.FC = () => {
   const handleDelete = async (item: any) => {
     try{
       const response = await http.delete(`/poll/${item?.id}`);
+      console.log(response);
       toast.success("To'plam muvaffaqiyatli o'chirildi", {autoClose: 1200})
     }catch(err){
       toast.error("To'plam o'chirishda qandaydir muommo paydo bo'ldi")
