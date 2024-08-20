@@ -3,7 +3,6 @@ import { LoginFormPage, ProConfigProvider, ProFormText,} from '@ant-design/pro-c
 import { theme } from 'antd';
 import { toast, ToastContainer } from 'react-toastify';
 import './style.scss'
-import { useEffect } from 'react';
 import http from '../../config';
 import { useNavigate } from 'react-router-dom';
 import { setCookies } from '../../utils/cocies';
