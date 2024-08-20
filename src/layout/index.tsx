@@ -3,7 +3,7 @@ import { DeleteOutlined, LogoutOutlined } from '@ant-design/icons';
 import { Layout, Menu, theme, Popover, Button } from 'antd';
 import { Outlet, useNavigate } from 'react-router-dom';
 import './style.css';
-import { Quession, QuessionEdit } from '@ui';
+import { Quession } from '@ui';
 import http from '../config';
 import { MenuIds } from '@store';
 import { toast } from 'react-toastify';
@@ -19,6 +19,7 @@ const App: React.FC = () => {
   const [visiblePopover, setVisiblePopover] = useState<string | null>(null);
   const [selectedMenuKey, setSelectedMenuKey] = useState<string | null>(null);
   const { changeMenu_id }: any = MenuIds();
+  const [file, setFile] = useState('')
 
   const {
     token: { colorBgContainer },
@@ -27,6 +28,8 @@ const App: React.FC = () => {
   async function getMenuData() {
     const response = await http.get('/polls');
     setMenuData(response?.data?.poll);
+    const result = await http.get('/results')
+    setFile(result?.data?.file_url)
 
     if (response?.data?.poll?.length > 0) {
       const firstItemId = response?.data?.poll[0]?.id;
@@ -94,7 +97,6 @@ const App: React.FC = () => {
         >
           <DeleteOutlined className="delete-icon" />
         </Popover>
-        <QuessionEdit data={item} getData={getMenuData}/>
       </div>
     ),
   }));
@@ -131,15 +133,15 @@ const App: React.FC = () => {
            <div style={{display: 'flex', alignItems: 'center', gap: 20}}>
             <a
                 style={{ width: '100%', maxWidth: '300px', display: 'block' }}
-                href="https://docs.google.com/document/d/1OCT38qoCXS4bJpBKCldQ66rM_QoyGlrEi16wROj41do/export?format=docx"
-                download="Document.docx"
+                href={file}
+                download="Document.xlsx"
               >
-                <Button style={{ marginTop: 15, width: '100%' }}>Download Exel Document</Button>
+                <Button style={{ marginTop: 15, width: '100%' }}>Natijalarni yuklab olish</Button>
               </a>
              <Button style={{padding: 20}}  onClick={() => logout()}>
               <p  style={{display: 'flex', alignItems: 'center', gap: 3, cursor: 'pointer'}}>
                 <LogoutOutlined style={{fontSize: 24}}/>
-                  Logout
+                  Chiqish
                 </p>
              </Button>
            </div>
@@ -148,7 +150,7 @@ const App: React.FC = () => {
         <Content style={{ margin: '24px 16px 0' }}>
           <Outlet />
         </Content>
-        <Footer style={{ textAlign: 'center' }}>Ant Design ©{new Date().getFullYear()} Created by Ant UED</Footer>
+        <Footer style={{ textAlign: 'center' }}>  Researchpsy ©{new Date().getFullYear()} Yuldasheva Nilufar</Footer>
       </Layout>
     </Layout>
     </>

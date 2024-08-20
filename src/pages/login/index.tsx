@@ -12,9 +12,6 @@ const Page = () => {
   const { token } = theme.useToken();
   const navigate = useNavigate()
   
-  useEffect(() => {
-    document.title = 'Login'
-  })
  
   async function handleSubmit(e:any){
     try{
