@@ -30,18 +30,23 @@ function Index(props: any) {
         ...option,
         ball: Number(option.ball),
       })),
+      feedback: values.feedback.map((item: any) => ({
+        ...item,
+        from: Number(item.from),
+        to: Number(item.to),
+      })),
     };
-  
-   try{
+
+    try {
       const response = await http.post('/poll/', formattedValues);
-      if(response?.status == 201){
-        toast.success("To'plam muvaffaqiyatli qo'shildi", {autoClose: 1200})
+      if (response?.status === 201) {
+        toast.success("To'plam muvaffaqiyatli qo'shildi", { autoClose: 1200 });
       }
-    }catch(err){
-        toast.error("To'plam qo'shishda qandaydir muommo paydo bo'ldi", {autoClose: 1200})
-        console.error(err)
-      }
-    props?.getData()
+    } catch (err) {
+      toast.error("To'plam qo'shishda qandaydir muommo paydo bo'ldi", { autoClose: 1200 });
+      console.error(err);
+    }
+    props?.getData();
     setIsModalOpen(false);
     form.resetFields();
   };
@@ -110,6 +115,51 @@ function Index(props: any) {
                 <Form.Item>
                   <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
                     Variant qo'shish
+                  </Button>
+                </Form.Item>
+              </>
+            )}
+          </Form.List>
+
+          <Form.List name="feedback">
+            {(fields, { add, remove }) => (
+              <>
+                {fields.map(({ key, name, ...restField }, _:any) => (
+                  <Space key={key} style={{ display: 'block', marginBottom: 8, width: '100%', position: 'relative' }} align="baseline">
+                    <div style={{ display: 'flex', alignItems: 'center', width: '100%' }}>
+                      <Form.Item
+                        {...restField}
+                        name={[name, 'from']}
+                        rules={[{ required: true, message: 'From kiritish zarur!' }]}
+                        style={{ flex: 1, width: '30%', paddingRight: 8 }}
+                      >
+                        <Input type="number" style={{ width: '100%' }} placeholder="From" />
+                      </Form.Item>
+                      <Form.Item
+                        {...restField}
+                        name={[name, 'to']}
+                        rules={[{ required: true, message: 'To kiritish zarur!' }]}
+                        style={{ flex: 1, width: '30%', paddingLeft: 8 }}
+                      >
+                        <Input type="number" style={{ width: '100%' }} placeholder="To" />
+                      </Form.Item>
+                    </div>
+                    <Form.Item
+                        {...restField}
+                        name={[name, 'text']}
+                        rules={[{ required: true, message: 'Text kiritish zarur!' }]}
+                        style={{ width: '100%' }}
+                      >
+                        <Input.TextArea rows={2} style={{ width: '100%' }} placeholder="Text" />
+                      </Form.Item>
+                    {fields.length > 1 && (
+                      <MinusCircleOutlined style={{ position: 'absolute', top: 10, right: 10 }} onClick={() => remove(name)} />
+                    )}
+                  </Space>
+                ))}
+                <Form.Item>
+                  <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
+                    Feedback qo'shish
                   </Button>
                 </Form.Item>
               </>
