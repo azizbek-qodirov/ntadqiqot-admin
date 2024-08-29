@@ -6,6 +6,7 @@ import { AddQuession } from "@ui";
 import { MenuIds } from "@store";
 import http from "../../config";
 import { toast, ToastContainer } from "react-toastify";
+import './style.scss'
 
 function Quessionpage() {
     const {menu_id}:any = MenuIds()
@@ -65,7 +66,7 @@ function Quessionpage() {
       title: 'Amallar',
       key: 'action',
       render: (_, record:any) => (
-        <Space size="middle" style={{display: 'flex', alignItems: 'center'}}>
+        <Space className="spaceWrapper" size="middle" style={{display: 'flex', alignItems: 'center'}}>
           <AddQuession data={record} title={"O'zgartirish"}  getData={getQuession}/>
           <Button onClick={() => handleDelete(record?.id)} type="link" danger>
             O'chirish

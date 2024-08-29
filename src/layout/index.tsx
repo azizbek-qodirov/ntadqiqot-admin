@@ -70,6 +70,17 @@ const App: React.FC = () => {
     }
   };
 
+  const siderStyle: React.CSSProperties = {
+    zIndex: 9999,
+    height: '100vh',
+    position: 'fixed',
+    insetInlineStart: 0,
+    top: 0,
+    bottom: 0,
+    scrollbarWidth: 'thin',
+    scrollbarColor: 'unset',
+  };
+
   const menuItems = menuData.map((item: any, index) => ({
     key: String(index),
     label: (
@@ -105,8 +116,8 @@ const App: React.FC = () => {
    <>
     <Layout style={{ width: '100%', minHeight: '100vh' }}>
       <Sider
-        style={{ height: 'auto', minHeight: '100vh', position: 'relative' }}
-        breakpoint="lg"
+        style={siderStyle}
+        breakpoint="xl"
         collapsedWidth="0"
         onBreakpoint={() => setCollapsed(!collapsed)}
         onCollapse={(collapsed) => {
@@ -123,7 +134,7 @@ const App: React.FC = () => {
         />
         <Quession getData={getMenuData} datas={setMenuData} data={menuData} collapsed={collapsed} />
       </Sider>
-      <Layout style={{ height: '100%' }}>
+      <Layout style={{ height: '100%', paddingLeft: collapsed ? 200 : 0 }}>
         <Header style={{ padding: 0, background: colorBgContainer, height: 80 }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', padding: '0px 20px' }}>
             <div className={`logo-wrapper ${collapsed ? '' : 'logo-hidden'}`}>
