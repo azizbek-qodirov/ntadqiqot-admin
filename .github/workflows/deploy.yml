@@ -44,17 +44,8 @@ jobs:
             git stash
             git pull origin main
             log_success "---------------- CODE PULLED FROM GITHUB -----------------"
-            # Restart polling service
-            log_info "---------------- NAVIGATING TO POLLING DIRECTORY ----------------"
-            cd polling
             sudo docker compose down
-            log_error "---------------- POLLING SERVICES STOPPED ----------------"
+            log_error "---------------- PROJECT STOPPED -----------------"
+            sudo docker compose build
             sudo docker compose up --build -d
-            log_success "---------------- POLLING SERVICES STARTED ----------------"
-            # Restart API Gateway service
-            log_info "---------------- NAVIGATING TO API-GATEWAY DIRECTORY ----------------"
-            cd ../api-gateway
-            sudo docker compose down
-            log_error "---------------- API-GATEWAY SERVICES STOPPED ----------------"
-            sudo docker compose up --build -d
-            log_success "---------------- API-GATEWAY SERVICES STARTED ----------------" 
+            log_success "---------------- API-GATEWAY SERVICE STARTED ----------------"
