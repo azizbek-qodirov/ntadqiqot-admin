@@ -71,7 +71,7 @@ const App: React.FC = () => {
   };
 
   const siderStyle: React.CSSProperties = {
-    zIndex: 9999,
+    zIndex: 99,
     height: '100vh',
     position: 'fixed',
     insetInlineStart: 0,
@@ -111,6 +111,8 @@ const App: React.FC = () => {
       </div>
     ),
   }));
+
+  
 
   return (
    <>

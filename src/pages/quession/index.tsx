@@ -67,7 +67,7 @@ function Quessionpage() {
       key: 'action',
       render: (_, record:any) => (
         <Space className="spaceWrapper" size="middle" style={{display: 'flex', alignItems: 'center'}}>
-          <AddQuession data={record} title={"O'zgartirish"}  getData={getQuession}/>
+          <AddQuession data={record} title={"O'zgartirish"} modaltitle={'taxrirlash'}  getData={getQuession}/>
           <Button onClick={() => handleDelete(record?.id)} type="link" danger>
             O'chirish
           </Button>

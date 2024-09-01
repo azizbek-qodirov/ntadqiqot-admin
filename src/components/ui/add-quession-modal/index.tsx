@@ -54,10 +54,10 @@ function Index(props:any) {
   return (
     <>
       <Button type={props?.title ? 'dashed' : 'primary'} style={{ width: '100%', maxWidth: '200px', ...style }} onClick={showModal}>
-        {props?.title || "So'rovnoma qo'shish"} 
+        {props?.title || "Savol qo'shish"} 
       </Button>
       <Modal
-        title={"So'rovnoma qo'shish"}
+        title={props?.modaltitle ? 'Savol Taxrirlash' : "Savol qo'shish"}
         open={isModalOpen}
         onCancel={handleCancel}
         footer={null}
@@ -66,7 +66,7 @@ function Index(props:any) {
           <ProFormText
             initialValue={props?.data?.content || ''}
             name="content"
-            label="So'rovnoma nomi"
+            label="Savol nomi"
             placeholder="Iltimos so'rovnoma nomini kiriting"
             rules={[{ required: true, message: "So'rovnoma nomini kiriting !" }]}
           />

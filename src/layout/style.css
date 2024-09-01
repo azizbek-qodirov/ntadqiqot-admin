@@ -14,6 +14,7 @@
     right: 20px;
     top: 11px;
     font-size: 16px;
+    z-index: 999999;
   }
   
   .ant-menu-item-selected {
@@ -41,3 +42,5 @@
 .logo-hidden{
   display: none !important;
 }
+
+
