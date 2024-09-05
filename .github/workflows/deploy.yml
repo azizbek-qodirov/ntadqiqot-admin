@@ -19,7 +19,7 @@ jobs:
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_PASSWORD }}
+          password: ${{ secrets.SSH_PASSWORD }}
           port: ${{ secrets.SSH_PORT }}
           script: |
             # Define ANSI color codes
@@ -40,7 +40,7 @@ jobs:
             # Pull latest code from GitHub
             log_info "---------------- PULLING CODE FROM GITHUB ----------------"
             cd poll-frontend
-            cd Psixolog-Site
+            cd psixolog-admin
             git stash
             git pull origin main
             log_success "---------------- CODE PULLED FROM GITHUB -----------------"
